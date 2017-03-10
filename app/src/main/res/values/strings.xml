@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NaijaProgrammers</string>
+    <string name="user_name_label">Username</string>
+    <string name="github_url_label">GitHub Url</string>
+</resources>

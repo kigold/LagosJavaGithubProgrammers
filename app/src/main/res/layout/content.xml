@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:visibility="gone"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/content_profile_pics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/naruto"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:adjustViewBounds="true"/>
+
+        <TextView
+            android:id="@+id/content_request_btn"
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/content_profile_pics"
+            android:layout_toRightOf="@+id/content_profile_pics"
+            android:layout_toEndOf="@+id/content_profile_pics"
+            android:visibility="invisible"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/content_profile_pics"
+            android:layout_toEndOf="@+id/content_profile_pics"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="@string/user_name_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView16"/>
+
+            <TextView
+                android:id="@+id/content_username"
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/content_profile_pics"
+                android:layout_toEndOf="@+id/content_profile_pics"
+                android:textSize="@dimen/large_text"
+                android:textColor="@color/colorAccent"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:text="@string/github_url_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/github_url"
+            android:text="TextView"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/small_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/content_username"
+            android:layout_toRightOf="@+id/content_profile_pics"
+            android:layout_toEndOf="@+id/content_profile_pics"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/share_btn"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/share_btn"
+        android:paddingTop="10dp"
+        android:maxHeight="100dp"
+        android:adjustViewBounds="true"/>
+
+
+</LinearLayout>
