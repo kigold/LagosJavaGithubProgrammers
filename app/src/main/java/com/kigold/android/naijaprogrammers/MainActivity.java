@@ -17,6 +17,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ramotion.foldingcell.FoldingCell;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +28,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     //
-    private String url = "https://api.github.com/search/users?q=location:lagos+language:java&page=5";
+    private String url = "https://api.github.com/search/users?q=location:lagos+language:java";
+    //private String url = "&page=5";
+    private Integer length = 0;
     //get Progress Dialog Obj
     ProgressDialog prgDialog;
 
@@ -61,11 +64,102 @@ public class MainActivity extends AppCompatActivity {
         prgDialog = new ProgressDialog(getApplicationContext());
         prgDialog.setMessage("Loading Content ...");
         prgDialog.setCancelable(false);
+        //prgDialog.show();
 
         //Restful call
         //GithubHttpClient githubHttpClient= new GithubHttpClient(getApplicationContext(), url, null);
         //prgDialog.show();
-        GithubHttpClient(url, null);
+        //GithubHttpClient(url, null);
+
+
+        /*GithubClientUsage githubClientUsage = new GithubClientUsage();
+        try {
+            githubClientUsage.getProgrammers(getApplicationContext(), url);
+        }
+        catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }*/
+
+        /*
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://www.google.com", new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                // called before request is started
+                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                // called when response HTTP status is "200 OK"
+                length = response.length;
+                Toast.makeText(getApplicationContext(), "You are successfully registered!" + response.toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Toast.makeText(getApplicationContext(), String.valueOf(statusCode), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onRetry(int retryNo) {
+                // called when request is retried
+            }
+        });*/
+        /*
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://jsonplaceholder.typicode.com/posts/1", null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                // called before request is started
+                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //hide progress Dialog
+                //prgDiag.hide();
+                try {
+                    //Json object
+                    try {
+                        JSONObject obj = new JSONObject(response.toString());
+                        //
+                        if(statusCode == 200){
+                            Toast.makeText(getApplicationContext(), "You are successfully registered!" + response.length(), Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        //e.printStackTrace();
+                    }
+                    //when the JSON response has status boolean value assigned with true
+
+                    Toast.makeText(getApplicationContext(), "e.getMessage()", Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                //prgDiag.hide();
+                Toast.makeText(getApplicationContext(), "errorResponse.toString()", Toast.LENGTH_LONG).show();
+            }
+        });
+            */
+        //end of Restfulcall
 
 
 
@@ -79,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON tests" + length.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -90,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS test", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,6 +202,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //call github url to get list of users
+        githubHttpClient(url, null, System.getProperty("http.agent"), new Callback<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray listOfProgrammers) {
+                // pass list of programmers to ListView Adapter
+                for(int i = 0 ; i < listOfProgrammers.length() ; i++){
+                    try {
+                        adapter.add(new Model(
+                                listOfProgrammers.getJSONObject(i).getString("login"),//username
+                                listOfProgrammers.getJSONObject(i).getString("url"),//githuburl
+                                R.mipmap.naruto//list.getJSONObject(i).getString("avatar_url"),//avatar
+                        ));
+                    }
+                    catch (JSONException e){
+                    }
+                }
+                try {
+                    Toast.makeText(getApplicationContext(), "Programmers1: " + listOfProgrammers.getJSONObject(0).get("login") , Toast.LENGTH_SHORT).show();
+                }
+                catch (JSONException e){
+
+                }
+            }
+        });
+
     }
 
     @Override
@@ -118,15 +237,16 @@ public class MainActivity extends AppCompatActivity {
         //RestApiHandler.flushHttpCache();
     }
 
-    public  void GithubHttpClient(String url, RequestParams params) {
+    public void githubHttpClient(String url, RequestParams params, final String user_agent, final Callback<JSONArray> callback) {
         // show progress DIagloag
         //prgDiag.show();
         final Context context = getApplicationContext();
 
         //make restful call
         AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("User-Agent", user_agent);
         client.get(url, params, new JsonHttpResponseHandler() {
-            
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 //hide progress Dialog
@@ -137,8 +257,11 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(response.toString());
                         //
                         if(statusCode == 200){
-                            Toast.makeText(context, "You are successfully registered!", Toast.LENGTH_LONG).show();
-
+                            JSONArray resultList = (JSONArray) response.get("items");
+                            Toast.makeText(context, "You are successfully registered!" + resultList.getJSONObject(0).get("login"), Toast.LENGTH_LONG).show();
+                            if (callback != null) {
+                                callback.onResponse(resultList);
+                            }
                         }
                     }
                     catch (JSONException e) {
@@ -147,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //when the JSON response has status boolean value assigned with true
 
-                    Toast.makeText(context, "e.getMessage()", Toast.LENGTH_LONG).show();
                 }
                 catch (Exception e){
                     e.printStackTrace();
