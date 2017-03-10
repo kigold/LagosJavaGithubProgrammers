@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ramotion.foldingcell.FoldingCell;
+import com.squareup.picasso.Picasso;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,8 +63,19 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         viewHolder.github_url.setText(item.getGithub_url());
         viewHolder.title_username.setText(item.getUsername());
         viewHolder.content_username.setText(item.getUsername());
-        viewHolder.title_profile_pics.setImageResource(item.getAvatar());
-        viewHolder.content_profile_pics.setImageResource(item.getAvatar());
+        //load image with Picasso
+        Picasso.with(getContext())
+                .load(item.getAvatar())
+                .placeholder(R.mipmap.naruto) // optional
+                .error(R.mipmap.naruto)         // optional
+                .into(viewHolder.title_profile_pics);
+        Picasso.with(getContext())
+                .load(item.getAvatar())
+                .placeholder(R.mipmap.naruto) // optional
+                .error(R.mipmap.naruto)         // optional
+                .into(viewHolder.content_profile_pics);
+        //viewHolder.title_profile_pics.setImageResource(item.getAvatar());
+        //viewHolder.content_profile_pics.setImageResource(item.getAvatar());
 
 
 

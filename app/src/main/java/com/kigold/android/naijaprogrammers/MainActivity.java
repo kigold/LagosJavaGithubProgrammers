@@ -2,6 +2,7 @@ package com.kigold.android.naijaprogrammers;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -39,129 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 /*
-        //Create httpRequestCache
-        RestApiHandler.createHttpCacheDir(getApplicationContext());
-
-        //ASync
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                RestApiHandler restApiHandler = new RestApiHandler(url);
-
-                // create a List of key value pair for headers
-                List<Pair> headers = new ArrayList<Pair>();
-                headers.add(new Pair("User-Agent", "Get_Lagos_Java_Developers-v1"));
-                headers.add(new Pair("Contact-Me", "kingsleybox@yahoo.com"));
-
-
-                restApiHandler.callEndPoint(headers);
-
-            }
-        });*/
-
         //Set Progress Dialog Text
-        prgDialog = new ProgressDialog(getApplicationContext());
+        /*prgDialog = new ProgressDialog(getApplicationContext());
         prgDialog.setMessage("Loading Content ...");
-        prgDialog.setCancelable(false);
+        prgDialog.setCancelable(false);*/
         //prgDialog.show();
-
-        //Restful call
-        //GithubHttpClient githubHttpClient= new GithubHttpClient(getApplicationContext(), url, null);
-        //prgDialog.show();
-        //GithubHttpClient(url, null);
-
-
-        /*GithubClientUsage githubClientUsage = new GithubClientUsage();
-        try {
-            githubClientUsage.getProgrammers(getApplicationContext(), url);
-        }
-        catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }*/
-
-        /*
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://www.google.com", new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onStart() {
-                // called before request is started
-                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                // called when response HTTP status is "200 OK"
-                length = response.length;
-                Toast.makeText(getApplicationContext(), "You are successfully registered!" + response.toString(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Toast.makeText(getApplicationContext(), String.valueOf(statusCode), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onRetry(int retryNo) {
-                // called when request is retried
-            }
-        });*/
-        /*
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://jsonplaceholder.typicode.com/posts/1", null, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onStart() {
-                // called before request is started
-                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(getApplicationContext(), "Preparing List", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                //hide progress Dialog
-                //prgDiag.hide();
-                try {
-                    //Json object
-                    try {
-                        JSONObject obj = new JSONObject(response.toString());
-                        //
-                        if(statusCode == 200){
-                            Toast.makeText(getApplicationContext(), "You are successfully registered!" + response.length(), Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                    catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        //e.printStackTrace();
-                    }
-                    //when the JSON response has status boolean value assigned with true
-
-                    Toast.makeText(getApplicationContext(), "e.getMessage()", Toast.LENGTH_LONG).show();
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                //prgDiag.hide();
-                Toast.makeText(getApplicationContext(), "errorResponse.toString()", Toast.LENGTH_LONG).show();
-            }
-        });
-            */
-        //end of Restfulcall
-
-
 
         // get our list view
         ListView theListView = (ListView) findViewById(R.id.activity_main);
@@ -185,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS test", Toast.LENGTH_SHORT).show();
+                //Share User with friends
+                shareit();
             }
         });
 
@@ -212,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         adapter.add(new Model(
                                 listOfProgrammers.getJSONObject(i).getString("login"),//username
                                 listOfProgrammers.getJSONObject(i).getString("url"),//githuburl
-                                R.mipmap.naruto//list.getJSONObject(i).getString("avatar_url"),//avatar
+                                listOfProgrammers.getJSONObject(i).getString("avatar_url")//avatar
                         ));
                     }
                     catch (JSONException e){
@@ -283,6 +168,16 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(context, "errorResponse.toString()", Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+    //share user with friends intent
+    public void shareit(/*int id, String tag*/) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody =  "Check out this awesome developer @<github username>, <github profile url>. ";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lagos Java Developer on Github");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
     }
 }

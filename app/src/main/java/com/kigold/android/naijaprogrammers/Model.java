@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class Model {
     private String username;
     private String github_url;
-    private Integer avatar;
+    private String avatar;
 
     private View.OnClickListener requestBtnClickListener;
     //Constructor
 
-    public Model(String username, String github_url, Integer avatar) {
+    public Model(String username, String github_url, String avatar) {
         this.username = username;
         this.github_url = github_url;
         this.avatar = avatar;
@@ -44,11 +44,11 @@ public class Model {
         this.github_url = github_url;
     }
 
-    public Integer getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Integer avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -64,10 +64,10 @@ public class Model {
     //seed data
     public static ArrayList<Model> getTestingList() {
         ArrayList<Model> models = new ArrayList<>();
-        models.add(new Model("gift", "https://www.github.com/gifty", R.mipmap.naruto));
-        /*models.add(new Model("kingsley", "https://www.github.com/kigold", R.mipmap.naruto));
-        models.add(new Model("Celestine", "https://www.github.com/ceo", R.mipmap.naruto));
-        models.add(new Model("John", "https://www.github.com/john", R.mipmap.naruto));*/
+        models.add(new Model("kingsley", "https://www.github.com/kigold", "R.mipmap.naruto"));
+        /*models.add(new Model("Celestine", "https://www.github.com/ceo", "R.mipmap.naruto"));
+        models.add(new Model("John", "https://www.github.com/john", R.mipmap.naruto));
+        models.add(new Model("gift", "https://www.github.com/gifty", R.mipmap.naruto))*/;
         return models;
     }
 
@@ -79,7 +79,7 @@ public class Model {
                 models.add(new Model(
                         list.getJSONObject(i).getString("login"),//username
                         list.getJSONObject(i).getString("url"),//githuburl
-                        R.mipmap.naruto//list.getJSONObject(i).getString("avatar_url"),//avatar
+                        list.getJSONObject(i).getString("avatar_url")//avatar
                     ));
             }
             catch (JSONException e){
