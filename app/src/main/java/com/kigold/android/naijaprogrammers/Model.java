@@ -17,6 +17,7 @@ public class Model {
     private String avatar;
 
     private View.OnClickListener requestBtnClickListener;
+
     //Constructor
 
     public Model(String username, String github_url, String avatar) {

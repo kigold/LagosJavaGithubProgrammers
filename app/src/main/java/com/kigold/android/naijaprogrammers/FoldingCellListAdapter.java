@@ -1,6 +1,7 @@
 package com.kigold.android.naijaprogrammers;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         viewHolder.github_url.setText(item.getGithub_url());
         viewHolder.title_username.setText(item.getUsername());
         viewHolder.content_username.setText(item.getUsername());
+        viewHolder.share_btn.setTag(item.getUsername() + ", " + item.getGithub_url());
         //load image with Picasso
         Picasso.with(getContext())
                 .load(item.getAvatar())
@@ -123,5 +125,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         ImageView title_profile_pics;
         ImageView content_profile_pics;
         TextView github_url;
+
     }
 }

@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS test", Toast.LENGTH_SHORT).show();
                 //Share User with friends
-                shareit();
+                shareit(v.getTag().toString());
             }
+
+
         });
 
         // set elements to adapter
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         adapter.add(new Model(
                                 listOfProgrammers.getJSONObject(i).getString("login"),//username
-                                listOfProgrammers.getJSONObject(i).getString("url"),//githuburl
+                                listOfProgrammers.getJSONObject(i).getString("html_url"),//githuburl
                                 listOfProgrammers.getJSONObject(i).getString("avatar_url")//avatar
                         ));
                     }
@@ -165,16 +168,20 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 //prgDiag.hide();
-                Toast.makeText(context, "errorResponse.toString()", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, errorResponse.toString(), Toast.LENGTH_LONG).show();
             }
         });
 
     }
     //share user with friends intent
-    public void shareit(/*int id, String tag*/) {
+    public void shareit(String tag) {
+        //get Username and url by spliting tag with "|"
+        //String username = tag.split("[|]")[0];
+        //String url = tag.split("[|]")[1];
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBody =  "Check out this awesome developer @<github username>, <github profile url>. ";
+        //String shareBody = MessageFormat.format("Check out this awesome developer @github {0}, <github {1}>.", username, url);
+        String shareBody =  MessageFormat.format("Check out this awesome developer @{0}", tag);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lagos Java Developer on Github");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
