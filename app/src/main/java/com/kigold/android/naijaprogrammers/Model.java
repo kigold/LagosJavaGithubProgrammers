@@ -66,8 +66,8 @@ public class Model {
     public static ArrayList<Model> getTestingList() {
         ArrayList<Model> models = new ArrayList<>();
         models.add(new Model("kingsley", "https://www.github.com/kigold", "R.mipmap.naruto"));
-        /*models.add(new Model("Celestine", "https://www.github.com/ceo", "R.mipmap.naruto"));
-        models.add(new Model("John", "https://www.github.com/john", R.mipmap.naruto));
+        models.add(new Model("Celestine", "https://www.github.com/ceo", "R.mipmap.naruto"));
+        /*models.add(new Model("John", "https://www.github.com/john", R.mipmap.naruto));
         models.add(new Model("gift", "https://www.github.com/gifty", R.mipmap.naruto))*/;
         return models;
     }
