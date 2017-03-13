@@ -7,6 +7,9 @@ import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -28,6 +31,7 @@ import org.json.JSONObject;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -81,6 +85,26 @@ public class MainActivity extends AppCompatActivity {
 
     //get Progress Dialog Obj
     ProgressDialog prgDialog;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.about:
+                Intent intent = new Intent(this, AboutFragment.class);
+                startActivity(intent);
+                finish();
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

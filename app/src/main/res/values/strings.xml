@@ -2,4 +2,14 @@
     <string name="app_name">NaijaProgrammers</string>
     <string name="user_name_label">Username</string>
     <string name="github_url_label">GitHub Url</string>
+    <string name="title_activity_splash__screen">Splash_Screen</string>
+    <string name="splash_title">Java + Lagos</string>
+    <string name="menu_about">About</string>
+    <string name="title_activity_about_fragment">AboutFragment</string>
+
+    <string name="about_story">
+        This app Retrieves users meeting certain criteria from github\'s api.
+        This particular instance gets all Github Users that programme with java.
+
+    </string>
 </resources>
