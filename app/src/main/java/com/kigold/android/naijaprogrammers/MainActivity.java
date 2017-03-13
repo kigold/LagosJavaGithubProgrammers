@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //get Progress Dialog Obj
-    ProgressDialog prgDialog;
+    //ProgressDialog prgDialog;
+
+    ProgressBar pb;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //init progressbar
+        pb = (ProgressBar) findViewById(R.id.progressBar);
+        pb.setVisibility(ProgressBar.VISIBLE);
 /*
         //Set Progress Dialog Text
         /*prgDialog = new ProgressDialog(getApplicationContext());
@@ -210,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
                                 int test_condi1 = resultTotalCount/itemsInResultPage;
                                 if(resultCurrentPage == 1 || (resultTotalCount/itemsInResultPage) >= resultCurrentPage-1){
                                     String newUrl = url+resultCurrentPage;
+                                    //Make Progress Bar Visible
+                                    pb.setVisibility(ProgressBar.VISIBLE);
                                     //call github url to get list of users
                                     githubHttpClient(url+resultCurrentPage, null, System.getProperty("http.agent"), new Callback<JSONArray>() {
                                         @Override
@@ -267,7 +276,9 @@ public class MainActivity extends AppCompatActivity {
                             setResultTotalCount((Integer)response.get("total_count"));
                             setItemsInResultPage(resultList.length());
                             setCurrentTotalItems(getCurrentTotalItems() + resultList.length());
-                            Toast.makeText(context, "Retrieved a total Number of " + getItemsInResultPage() + " items", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, "Retrieved a total Number of " + getItemsInResultPage() + " items", Toast.LENGTH_LONG).show();
+                            //make progress bar invincible
+                            pb.setVisibility(ProgressBar.INVISIBLE);
                             if (callback != null) {
                                 callback.onResponse(resultList);
                             }
@@ -290,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 //prgDiag.hide();
                 Toast.makeText(context, "error " + statusCode, Toast.LENGTH_LONG).show();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
 
