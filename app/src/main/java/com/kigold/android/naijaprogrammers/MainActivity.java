@@ -3,6 +3,7 @@ package com.kigold.android.naijaprogrammers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -170,8 +171,20 @@ public class MainActivity extends AppCompatActivity {
                 //Share User with friends
                 shareit(v.getTag().toString());
             }
+        });
 
+        //add click event handler for urlLuncher, to open github page on a browser
+        adapter.setDefaultUrlLunchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS View Url", Toast.LENGTH_SHORT).show();
+                //SLunch Browser
+                String url = v.getTag().toString();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
 
+            }
         });
 
         // set elements to adapter

@@ -23,6 +23,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
+    private View.OnClickListener defaultUrlLunchClickListener;
 
 
     public FoldingCellListAdapter(Context context, List<Model> objects) {
@@ -48,6 +49,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
             viewHolder.title_profile_pics = (ImageView) cell.findViewById(R.id.title_profile_pics);
             viewHolder.content_profile_pics = (ImageView) cell.findViewById(R.id.content_profile_pics);
             viewHolder.share_btn = (ImageView) cell.findViewById(R.id.share_btn);
+
             cell.setTag(viewHolder);
         } else {
             // for existing cell set valid valid state(without animation)
@@ -62,8 +64,11 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         // bind data from selected element to view through view holder
 
         viewHolder.github_url.setText(item.getGithub_url());
+        // set tag that can be accessed from onCLickEvent
+        viewHolder.github_url.setTag(item.getGithub_url());
         viewHolder.title_username.setText(item.getUsername());
         viewHolder.content_username.setText(item.getUsername());
+        // set tag that can be accessed from onCLickEvent
         viewHolder.share_btn.setTag(item.getUsername() + ", " + item.getGithub_url());
         //load image with Picasso
         Picasso.with(getContext())
@@ -87,6 +92,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         } else {
             // (optionally) add "default" handler if no handler found in title
             viewHolder.share_btn.setOnClickListener(defaultRequestBtnClickListener);
+        }
+
+        // set web Luncher
+        if (item.getUrlLuncherClickListener() != null) {
+            viewHolder.github_url.setOnClickListener(item.getUrlLuncherClickListener());
+        } else {
+            // (optionally) add "default" handler if no handler found in title
+            viewHolder.github_url.setOnClickListener(defaultUrlLunchClickListener);
         }
 
 
@@ -115,6 +128,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
 
     public void setDefaultRequestBtnClickListener(View.OnClickListener defaultRequestBtnClickListener) {
         this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
+    }
+
+    public View.OnClickListener getDefaultUrlLunchClickListener() {
+        return defaultUrlLunchClickListener;
+    }
+
+    public void setDefaultUrlLunchClickListener(View.OnClickListener defaultUrlLunchClickListener) {
+        this.defaultUrlLunchClickListener = defaultUrlLunchClickListener;
     }
 
     // View lookup cache

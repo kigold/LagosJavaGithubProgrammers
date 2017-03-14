@@ -17,7 +17,7 @@ public class Model {
     private String avatar;
 
     private View.OnClickListener requestBtnClickListener;
-
+    private View.OnClickListener urlLuncherClickListener;
     //Constructor
 
     public Model(String username, String github_url, String avatar) {
@@ -60,6 +60,13 @@ public class Model {
 
     public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {
         this.requestBtnClickListener = requestBtnClickListener;
+    }
+
+    public View.OnClickListener getUrlLuncherClickListener() {return urlLuncherClickListener;
+    }
+
+    public void setUrlLuncherClickListener(View.OnClickListener urlLuncherClickListener) {
+        this.urlLuncherClickListener = urlLuncherClickListener;
     }
 
     //seed data
