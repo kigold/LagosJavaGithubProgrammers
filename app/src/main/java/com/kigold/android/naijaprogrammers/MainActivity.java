@@ -135,13 +135,6 @@ public class MainActivity extends AppCompatActivity {
         //final ArrayList<Model> items = Model.getTestingList();
         final ArrayList<Model> items = new ArrayList<>();
 
-        // add custom btn handler to first list item
-        /*items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON tests" + length.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
         // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
         final FoldingCellListAdapter adapter = new FoldingCellListAdapter(this, items);
@@ -167,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS test", Toast.LENGTH_SHORT).show();
                 //Share User with friends
                 shareit(v.getTag().toString());
             }
@@ -177,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDefaultUrlLunchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS View Url", Toast.LENGTH_SHORT).show();
                 //SLunch Browser
                 String url = v.getTag().toString();
                 Intent i = new Intent(Intent.ACTION_VIEW);
@@ -222,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
                             if(preLast !=lastItem){
                                 //to avoid multiple calls for last item
                                 preLast = lastItem;
-                                Toast.makeText(getApplicationContext(), "Programmers1: " + "Scrolled to Bottom" , Toast.LENGTH_SHORT).show();
                                 //if all data result is not yet retrieved, that is there are still more to be gotten
                                 int test_condi1 = resultTotalCount/itemsInResultPage;
                                 if(resultCurrentPage == 1 || (resultTotalCount/itemsInResultPage) >= resultCurrentPage-1){
@@ -286,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
                             setResultTotalCount((Integer)response.get("total_count"));
                             setItemsInResultPage(resultList.length());
                             setCurrentTotalItems(getCurrentTotalItems() + resultList.length());
-                            //Toast.makeText(context, "Retrieved a total Number of " + getItemsInResultPage() + " items", Toast.LENGTH_LONG).show();
                             //make progress bar invincible
                             pb.setVisibility(ProgressBar.INVISIBLE);
                             if (callback != null) {
