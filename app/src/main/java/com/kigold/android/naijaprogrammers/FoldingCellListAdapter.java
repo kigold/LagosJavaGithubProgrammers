@@ -68,13 +68,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<Model> {
         //load image with Picasso
         Picasso.with(getContext())
                 .load(item.getAvatar())
-                .placeholder(R.mipmap.naruto) // optional
-                .error(R.mipmap.naruto)         // optional
+                .placeholder(R.mipmap.placeholder) // optional
+                .error(R.mipmap.placeholder)         // optional
                 .into(viewHolder.title_profile_pics);
         Picasso.with(getContext())
                 .load(item.getAvatar())
-                .placeholder(R.mipmap.naruto) // optional
-                .error(R.mipmap.naruto)         // optional
+                .placeholder(R.mipmap.placeholder) // optional
+                .error(R.mipmap.placeholder)         // optional
                 .into(viewHolder.content_profile_pics);
         //viewHolder.title_profile_pics.setImageResource(item.getAvatar());
         //viewHolder.content_profile_pics.setImageResource(item.getAvatar());

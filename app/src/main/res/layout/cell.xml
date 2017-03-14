@@ -6,6 +6,7 @@
                                       folding-cell:additionalFlipsCount="0"
                                       folding-cell:animationDuration="1300"
                                       folding-cell:backSideColor="@color/colorPrimary"
+                                      android:background="@drawable/background"
                                       folding-cell:cameraHeight="30"
     >
 

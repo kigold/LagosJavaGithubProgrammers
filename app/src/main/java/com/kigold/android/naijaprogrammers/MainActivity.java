@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
     //
     private String url = "https://api.github.com/search/users?q=location:lagos+language:java&page=";
     //private String url = "&page=5";
-    private Integer length = 0;
-    int toastCount = 0;
     int preLast;
 
     private int resultTotalCount = 0;
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         //ListView Header
         final TextView list_view_header = (TextView) findViewById(R.id.list_view_header);
-        list_view_header.setText(currentTotalItems + " out of " + resultTotalCount);
+        list_view_header.setText("Showing " + currentTotalItems + " out of " + resultTotalCount);
 
 
         // prepare elements to display
@@ -158,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     processDataFromGithubCallback(listOfProgrammers, adapter, list_view_header);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), getItemsInResultPage() + " items where received, list completely downloaded " + toastCount, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getItemsInResultPage() + " items where received, list completely downloaded ", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -211,8 +209,7 @@ public class MainActivity extends AppCompatActivity {
                             if(preLast !=lastItem){
                                 //to avoid multiple calls for last item
                                 preLast = lastItem;
-                                Toast.makeText(getApplicationContext(), "Programmers1: " + "Scrolled to Bottom" + toastCount , Toast.LENGTH_SHORT).show();
-                                toastCount++;
+                                Toast.makeText(getApplicationContext(), "Programmers1: " + "Scrolled to Bottom" , Toast.LENGTH_SHORT).show();
                                 //if all data result is not yet retrieved, that is there are still more to be gotten
                                 int test_condi1 = resultTotalCount/itemsInResultPage;
                                 if(resultCurrentPage == 1 || (resultTotalCount/itemsInResultPage) >= resultCurrentPage-1){
@@ -230,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                                                 processDataFromGithubCallback(listOfProgrammers, adapter, list_view_header);
                                             }
                                             else{
-                                                Toast.makeText(getApplicationContext(), getItemsInResultPage() + " items where received, list completely downloaded " + toastCount, Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), getItemsInResultPage() + " items where received, list completely downloaded ", Toast.LENGTH_LONG).show();
                                             }
 
                                         }
@@ -335,6 +332,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //update ListVIew Header TextView
-        list_view_header.setText(currentTotalItems + " out of " + resultTotalCount);
+        list_view_header.setText("Showing " + currentTotalItems + " out of " + resultTotalCount);
     }
 }

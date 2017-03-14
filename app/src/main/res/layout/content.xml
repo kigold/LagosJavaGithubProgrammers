@@ -4,9 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:visibility="gone"
-
-    >
+                android:visibility="gone"
+              android:paddingBottom="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
             android:id="@+id/content_profile_pics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/naruto"
+            app:srcCompat="@mipmap/placeholder"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -100,7 +99,7 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/share_btn"
         android:paddingTop="10dp"
-        android:maxHeight="100dp"
+        android:maxHeight="60dp"
         android:adjustViewBounds="true"/>
 
 
